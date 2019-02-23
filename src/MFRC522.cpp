@@ -7,12 +7,14 @@
 #include <Arduino.h>
 #include "MFRC522.h"
 #include "MFRC522Debug.h"
-#include <mgos.h>
+
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Functions for setting up the Arduino
 /////////////////////////////////////////////////////////////////////////////////////
-
+MFRC522::MFRC522() { 
+    
+} 
 
 /////////////////////////////////////////////////////////////////////////////////////
 // Basic interface functions for communicating with the MFRC522
@@ -1330,7 +1332,6 @@ void MFRC522::PCD_DumpVersionToSerial()
     // When 0x00 or 0xFF is returned, communication probably failed
     if ((v == 0x00) || (v == 0xFF)) {
         //Serial.println(F("WARNING: Communication failure, is the MFRC522 properly connected?"));
-        LOG(LL_INFO, ("WARNING: Communication failure, is the MFRC522 properly connected?"));
         return;
     }
     char buf[128];
@@ -1365,7 +1366,6 @@ void MFRC522::PCD_DumpVersionToSerial()
     //Serial.println(F("WARNING: Communication failure, is the MFRC522 properly connected?"));
     //    len += snprintf(buf + len, sizeof (buf) - len, "WARNING: Communication failure, is the MFRC522 properly connected?");
     //}
-    LOG(LL_INFO, ("%s", buf));
 } // End PCD_DumpVersionToSerial()
 
 /**
@@ -1405,7 +1405,6 @@ void MFRC522::PICC_DumpToSerial(Uid *uid /* < Pointer to Uid struct returned fro
         case PICC_TYPE_MIFARE_PLUS:
         case PICC_TYPE_TNP3XXX:
             //Serial.println(F("Dumping memory contents not implemented for that PICC type."));
-            LOG(LL_INFO, ("Dumping memory contents not implemented for that PICC type."));
             break;
 
         case PICC_TYPE_UNKNOWN:
@@ -1439,7 +1438,6 @@ void MFRC522::PICC_DumpDetailsToSerial(Uid *uid /*< Pointer to Uid struct return
         len += snprintf(buf + len, sizeof (buf) - len, "%02X", (0xFF & uid->uidByte[i]));
     }
     //Serial.println();
-    LOG(LL_INFO, ("%s", buf));
 
     // SAK
     //Serial.print(F("Card SAK: "));
@@ -1449,13 +1447,11 @@ void MFRC522::PICC_DumpDetailsToSerial(Uid *uid /*< Pointer to Uid struct return
     //    Serial.print(F("0"));
     //}
     //Serial.println(uid->sak, HEX);
-    LOG(LL_INFO, ("%s%02X", buf, uid->sak));
 
     // (suggested) PICC type
     PICC_Type piccType = PICC_GetType(uid->sak);
     //Serial.print(F("PICC type: "));
     //Serial.println(PICC_GetTypeName(piccType));
-    LOG(LL_INFO, ("PICC type: %s", (const char*) PICC_GetTypeName(piccType)));
 } // End PICC_DumpDetailsToSerial()
 
 /**
@@ -1491,7 +1487,6 @@ void MFRC522::PICC_DumpMifareClassicToSerial(Uid *uid, ///< Pointer to Uid struc
     // Dump sectors, highest address first.
     if (no_of_sectors) {
         //Serial.println(F("Sector Block   0  1  2  3   4  5  6  7   8  9 10 11  12 13 14 15  AccessBits"));
-        LOG(LL_INFO, ("Sector Block   0  1  2  3   4  5  6  7   8  9 10 11  12 13 14 15  AccessBits"));
         for (int8_t i = no_of_sectors - 1; i >= 0; i--) {
 
             PICC_DumpMifareClassicSectorToSerial(uid, key, i);
@@ -1586,7 +1581,6 @@ void MFRC522::PICC_DumpMifareClassicSectorToSerial(Uid *uid, ///< Pointer to Uid
                 //Serial.print(F("PCD_Authenticate() failed: "));
                 //Serial.println(GetStatusCodeName(status));
                 len += snprintf(buf + len, sizeof (buf) - len, "PCD_Authenticate() failed: %s", (const char*) GetStatusCodeName(status));
-                LOG(LL_INFO, ("%s", buf));
                 return;
             }
         }
@@ -1597,7 +1591,6 @@ void MFRC522::PICC_DumpMifareClassicSectorToSerial(Uid *uid, ///< Pointer to Uid
             //Serial.print(F("MIFARE_Read() failed: "));
             //Serial.println(GetStatusCodeName(status));
             len += snprintf(buf + len, sizeof (buf) - len, "MIFARE_Read() failed: %s", (const char*) GetStatusCodeName(status));
-            LOG(LL_INFO, ("%s", buf));
             continue;
         }
         // Dump data
@@ -1665,7 +1658,6 @@ void MFRC522::PICC_DumpMifareClassicSectorToSerial(Uid *uid, ///< Pointer to Uid
             len += snprintf(buf + len, sizeof (buf) - len, " Value=%02X  Adr=%02X", (0xFF & value), (0xFF & buffer[12]));
         }
         //Serial.println();
-        LOG(LL_INFO, ("%s", buf));
     }
 
     return;
@@ -1682,7 +1674,6 @@ void MFRC522::PICC_DumpMifareUltralightToSerial()
     uint8_t i;
 
     //Serial.println(F("Page  0  1  2  3"));
-    LOG(LL_INFO, ("Page  0  1  2  3"));
     // Try the mpages of the original Ultralight. Ultralight C has more pages.
     for (uint8_t page = 0; page < 16; page += 4) { // Read returns data for 4 pages at a time.
         // Read pages
@@ -1691,7 +1682,6 @@ void MFRC522::PICC_DumpMifareUltralightToSerial()
         if (status != STATUS_OK) {
             //Serial.print(F("MIFARE_Read() failed: "));
             //Serial.println(GetStatusCodeName(status));
-            LOG(LL_INFO, ("MIFARE_Read() failed: %s", (const char*) GetStatusCodeName(status)));
             break;
         }
         // Dump data
@@ -1720,7 +1710,6 @@ void MFRC522::PICC_DumpMifareUltralightToSerial()
                 len += snprintf(buf + len, sizeof (buf) - len, "%02X", (0xFF & buffer[i]));
             }
             //Serial.println();
-            LOG(LL_INFO, ("%s", buf));
         }
     }
 } // End PICC_DumpMifareUltralightToSerial()
