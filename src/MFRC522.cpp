@@ -1330,6 +1330,7 @@ void MFRC522::PCD_DumpVersionToSerial()
     uint8_t v = PCD_ReadRegister(VersionReg);
     // When 0x00 or 0xFF is returned, communication probably failed
     if ((v == 0x00) || (v == 0xFF)) {
+        LOG(LL_INFO, ("WARNING: Communication failure, is the MFRC522 properly connected?"));
         //Serial.println(F("WARNING: Communication failure, is the MFRC522 properly connected?"));
         return;
     }
