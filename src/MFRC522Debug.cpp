@@ -32,15 +32,15 @@ const __FlashStringHelper *MFRC522Debug::PICC_GetTypeName(MFRC522::PICC_Type pic
 const __FlashStringHelper *MFRC522Debug::GetStatusCodeName(MFRC522::StatusCode code	///< One of the StatusCode enums.
 ) {
 	switch (code) {
-		case MFRC522::STATUS_OK:				return F("Success.");
-		case MFRC522::STATUS_ERROR:			return F("Error in communication.");
-		case MFRC522::STATUS_COLLISION:		return F("Collission detected.");
-		case MFRC522::STATUS_TIMEOUT:		return F("Timeout in communication.");
-		case MFRC522::STATUS_NO_ROOM:		return F("A buffer is not big enough.");
-		case MFRC522::STATUS_INTERNAL_ERROR:	return F("Internal error in the code. Should not happen.");
-		case MFRC522::STATUS_INVALID:		return F("Invalid argument.");
-		case MFRC522::STATUS_CRC_WRONG:		return F("The CRC_A does not match.");
-		case MFRC522::STATUS_MIFARE_NACK:	return F("A MIFARE PICC responded with NAK.");
+		case MFRC522::MFRC522_STATUS_OK:				return F("Success.");
+		case MFRC522::MFRC522_STATUS_ERROR:			return F("Error in communication.");
+		case MFRC522::MFRC522_STATUS_COLLISION:		return F("Collission detected.");
+		case MFRC522::MFRC522_STATUS_TIMEOUT:		return F("Timeout in communication.");
+		case MFRC522::MFRC522_STATUS_NO_ROOM:		return F("A buffer is not big enough.");
+		case MFRC522::MFRC522_STATUS_INTERNAL_ERROR:	return F("Internal error in the code. Should not happen.");
+		case MFRC522::MFRC522_STATUS_INVALID:		return F("Invalid argument.");
+		case MFRC522::MFRC522_STATUS_CRC_WRONG:		return F("The CRC_A does not match.");
+		case MFRC522::MFRC522_STATUS_MIFARE_NACK:	return F("A MIFARE PICC responded with NAK.");
 		default:					return F("Unknown error");
 	}
 } // End GetStatusCodeName()

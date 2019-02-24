@@ -318,15 +318,15 @@ public:
 
     enum StatusCode : uint8_t
     {
-        STATUS_OK, // Success
-        STATUS_ERROR, // Error in communication
-        STATUS_COLLISION, // Collission detected
-        STATUS_TIMEOUT, // Timeout in communication.
-        STATUS_NO_ROOM, // A buffer is not big enough.
-        STATUS_INTERNAL_ERROR, // Internal error in the code. Should not happen ;-)
-        STATUS_INVALID, // Invalid argument.
-        STATUS_CRC_WRONG, // The CRC_A does not match
-        STATUS_MIFARE_NACK = 0xff // A MIFARE PICC responded with NAK.
+        MFRC522_STATUS_OK, // Success
+        MFRC522_STATUS_ERROR, // Error in communication
+        MFRC522_STATUS_COLLISION, // Collission detected
+        MFRC522_STATUS_TIMEOUT, // Timeout in communication.
+        MFRC522_STATUS_NO_ROOM, // A buffer is not big enough.
+        MFRC522_STATUS_INTERNAL_ERROR, // Internal error in the code. Should not happen ;-)
+        MFRC522_STATUS_INVALID, // Invalid argument.
+        MFRC522_STATUS_CRC_WRONG, // The CRC_A does not match
+        MFRC522_STATUS_MIFARE_NACK = 0xff // A MIFARE PICC responded with NAK.
     };
 
     // A struct used for passing the UID of a PICC.
@@ -352,8 +352,12 @@ public:
     // Functions for setting up the Arduino
     /////////////////////////////////////////////////////////////////////////////////////
 
-    MFRC522();
-
+    MFRC522(const uint8_t chipSelectPin, const uint8_t resetPowerDownPin,
+			SPIImpl *spiClass = &SPI, const SPISettings spiSettings = SPISettings(SPI_DEFAULT_FREQ, MSBFIRST, SPI_MODE0))
+			: _chipSelectPin(chipSelectPin), _resetPowerDownPin(resetPowerDownPin),
+			  _spiClass(spiClass), _spiSettings(spiSettings) {};
+    
+    MFRC522() : MFRC522(UNUSED_PIN, UNUSED_PIN) {};
 
     /////////////////////////////////////////////////////////////////////////////////////
     // Basic interface functions for communicating with the MFRC522
