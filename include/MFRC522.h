@@ -352,8 +352,16 @@ public:
     // Functions for setting up the Arduino
     /////////////////////////////////////////////////////////////////////////////////////
 
-    MFRC522();
+    MFRC522(const uint8_t chipSelectPin, const uint8_t resetPowerDownPin,
+            SPIImpl *spiClass = &SPI, const SPISettings spiSettings = SPISettings(SPI_DEFAULT_FREQ/*SPI_CLOCK_DIV4*/, MSBFIRST, SPI_MODE0))
+    : _chipSelectPin(chipSelectPin), _resetPowerDownPin(resetPowerDownPin),
+    _spiClass(spiClass), _spiSettings(spiSettings)
+    {
+    };
 
+    MFRC522() : MFRC522(UNUSED_PIN, UNUSED_PIN)
+    {
+    };
 
     /////////////////////////////////////////////////////////////////////////////////////
     // Basic interface functions for communicating with the MFRC522
