@@ -1,11 +1,11 @@
 let MFRC522 = {
-    _create: ffi('void *mgos_mfrc522_create()'),
+    _create: ffi('void *mgos_mfrc522_create(int, int)'),
     _init: ffi('void mgos_mfrc522_init(void *)'),
     _dump2serial: ffi('void mgos_mfrc522_dump2serial(void *)'),
 
-    create: function() {
+    create: function(pin1,pin2) {
         let obj = Object.create(MFRC522._proto);
-        obj.rfid = MFRC522._create(21,22);
+        obj.rfid = MFRC522._create(pin1,pin2);
         return obj;
       },
 
