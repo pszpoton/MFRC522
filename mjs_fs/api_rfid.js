@@ -1,6 +1,6 @@
 let MFRC522 = {
-    __create: ffi('void *mgos_mfrc522_create()'),
-    __init: ffi('void *mgos_mfrc522_init(void *,int,int)'),
+    _create: ffi('void *mgos_mfrc522_create()'),
+    _init: ffi('void *mgos_mfrc522_init(void *,int,int)'),
 
     create: function(rst, res) {
         let obj = Object.create(MFRC522._proto);
