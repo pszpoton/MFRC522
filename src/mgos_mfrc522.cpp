@@ -10,3 +10,10 @@ void mgos_mfrc522_init(MFRC522 *rfid)
   if (rfid == nullptr) return;
   rfid->PCD_Init();
 }
+
+void mgos_mfrc522_dump2serial(MFRC522 *rfid)
+ {
+  if (rfid == nullptr) return;
+  rfid->PCD_DumpVersionToSerial();
+}
+
