@@ -1326,6 +1326,7 @@ const __FlashStringHelper *MFRC522::PICC_GetTypeName(PICC_Type piccType ///< One
  */
 void MFRC522::PCD_DumpVersionToSerial()
 {
+    LOG(LL_INFO, ("Dump version"));
     // Get the MFRC522 firmware version
     uint8_t v = PCD_ReadRegister(VersionReg);
     // When 0x00 or 0xFF is returned, communication probably failed
@@ -1339,7 +1340,7 @@ void MFRC522::PCD_DumpVersionToSerial()
     //Serial.print(v, HEX);
     int len = snprintf(buf, sizeof (buf), "Firmware Version: %02X", (0xFF & v));
     LOG(LL_INFO, ("Firmware Version: 0x"));
-    printf("%d\n", v);
+    //printf("%d\n", v);
     // Lookup which version
     switch (v) {
         case 0x88:
