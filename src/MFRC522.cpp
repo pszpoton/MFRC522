@@ -8,8 +8,7 @@
 #include "MFRC522.h"
 #include "MFRC522Debug.h"
 #include <mgos.h>
-#include <sstream>  
-#include <string>
+
 
 
 /////////////////////////////////////////////////////////////////////////////////////
@@ -1779,14 +1778,7 @@ bool MFRC522::PICC_ReadCardSerial()
     return (result == MFRC522_STATUS_OK);
 } // End
 
-char* MFRC522::PICC_getUID()
+uint8_t MFRC522::PICC_getUID()
 {
-    std::stringstream  ss;
-    for (uint8_t i = 0; i < uid.size; i++) {
-        ss<<uid.uidByte[i];
-    }
-    std::string str = ss.str();
-    char *cstr = new char[str.length() + 1];
-    strcpy(cstr, str.c_str());
-    return cstr;
+    return uid.uidByte[0]
 }
