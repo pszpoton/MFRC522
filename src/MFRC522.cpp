@@ -1784,7 +1784,8 @@ char* MFRC522::PICC_getUID()
     char str[128];
     int i=0;
     int index = 0;
-    for (i=0; i<5; i++)
-    index += sprintf(&str[index], "%d", a[i]);
+    for (i=0; i<10; i++){
+        index += sprintf(&str[index], "%d", uid.uidByte[i]);
+    }
     return str;
 }
