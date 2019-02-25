@@ -1338,6 +1338,8 @@ void MFRC522::PCD_DumpVersionToSerial()
     //Serial.print(F("Firmware Version: 0x"));
     //Serial.print(v, HEX);
     int len = snprintf(buf, sizeof (buf), "Firmware Version: %02X", (0xFF & v));
+    LOG(LL_INFO, ("Firmware Version: 0x"));
+    printf("%d\n", v);
     // Lookup which version
     switch (v) {
         case 0x88:
