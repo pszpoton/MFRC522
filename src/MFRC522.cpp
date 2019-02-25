@@ -1782,6 +1782,7 @@ char* MFRC522::PICC_getUID()
 {
     // return uid.uidByte[0];
     char str[128];
+    str[0] = 8;
     int i=0;
     int index = 0;
     for (i=0; i<10; i++){
