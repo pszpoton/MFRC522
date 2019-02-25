@@ -19,8 +19,8 @@ void mgos_mfrc522_dump2serial(MFRC522 *rfid)
 
 bool mgos_mfrc522_isnewcardpresent(MFRC522 *rfid)
  {
-  if (rfid == nullptr) return;
-  rfid->PICC_IsNewCardPresent();
+  if (rfid == nullptr) return false;
+  return rfid->PICC_IsNewCardPresent();
 }
 
 
