@@ -17,3 +17,11 @@ void mgos_mfrc522_dump2serial(MFRC522 *rfid)
   rfid->PCD_DumpVersionToSerial();
 }
 
+bool mgos_mfrc522_isnewcardpresent(MFRC522 *rfid)
+ {
+  if (rfid == nullptr) return;
+  rfid->PICC_IsNewCardPresent();
+}
+
+
+

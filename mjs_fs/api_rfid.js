@@ -2,6 +2,7 @@ let MFRC522 = {
     _create: ffi('void *mgos_mfrc522_create(int, int)'),
     _init: ffi('void mgos_mfrc522_init(void *)'),
     _dump2serial: ffi('void mgos_mfrc522_dump2serial(void *)'),
+    _isnewcardpresent: ffi('bool mgos_mfrc522_isnewcardpresent(void *)'),
 
     create: function(pin1,pin2) {
         let obj = Object.create(MFRC522._proto);
@@ -16,6 +17,9 @@ let MFRC522 = {
         },
         dump2serial: function() {
             return MFRC522._dump2serial(this.rfid);
+        },
+        isnewcardpresent: function() {
+            return MFRC522._isnewcardpresent(this.rfid);
         },
     },
 };
