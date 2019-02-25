@@ -10,7 +10,7 @@ void mgos_mfrc522_init(MFRC522 *rc5);
 void mgos_mfrc522_dump2serial(MFRC522 *rc5);
 bool mgos_mfrc522_isnewcardpresent(MFRC522 *rc5);
 bool mgos_mfrc522_readcardserial(MFRC522 *rc5);
-const char* mgos_mfrc522_readuic(MFRC522 *rc5);
+char* mgos_mfrc522_readuic(MFRC522 *rc5);
 
 
 #ifdef __cplusplus

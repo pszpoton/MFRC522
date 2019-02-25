@@ -1779,12 +1779,14 @@ bool MFRC522::PICC_ReadCardSerial()
     return (result == MFRC522_STATUS_OK);
 } // End
 
-const char* MFRC522::PICC_getUID()
+char* MFRC522::PICC_getUID()
 {
     std::stringstream  ss;
     for (uint8_t i = 0; i < uid.size; i++) {
         ss<<uid.uidByte[i];
     }
-    const char *cstr = ss.str().c_str();
+    std::string str = ss.str();
+    char *cstr = new char[str.length() + 1];
+    strcpy(cstr, str.c_str());
     return cstr;
 }
