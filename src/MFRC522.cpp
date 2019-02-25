@@ -1778,7 +1778,7 @@ bool MFRC522::PICC_ReadCardSerial()
     return (result == MFRC522_STATUS_OK);
 } // End
 
-uint8_t MFRC522::PICC_getUID()
+int MFRC522::PICC_getUID()
 {
     return uid.uidByte[0]
 }
