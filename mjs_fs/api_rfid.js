@@ -20,7 +20,10 @@ let MFRC522 = {
             return MFRC522._dump2serial(this.rfid);
         },
         isnewcardpresent: function() {
-            return MFRC522.readuic(this.rfid);
+            return MFRC522._isnewcardpresent(this.rfid);
+        },
+        readuic: function() {
+            return MFRC522._readuic(this.rfid);
         },
     },
 };
