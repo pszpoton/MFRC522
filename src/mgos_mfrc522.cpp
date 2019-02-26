@@ -37,10 +37,10 @@ bool mgos_mfrc522_readcardserial(MFRC522 *rfid)
   return rfid->PICC_ReadCardSerial();
 }
 
-int mgos_mfrc522_readuic(MFRC522 *rfid)
+int mgos_mfrc522_readuic(MFRC522 *rfid, int i)
  {
-  if (rfid == nullptr) return NULL;
-  return rfid->PICC_getUID(int i);
+  if (rfid == nullptr) return 0;
+  return rfid->PICC_getUID(i);
 }
 
 
