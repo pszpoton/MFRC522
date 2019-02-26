@@ -22,7 +22,7 @@ let MFRC522 = {
         isnewcardpresent: function() {
             return MFRC522._isnewcardpresent(this.rfid);
         },
-        readuic: function() {
+        readuic: function(i) {
             return MFRC522._readuic(this.rfid,i);
         },
     },
