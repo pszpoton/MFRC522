@@ -441,7 +441,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////
     virtual bool PICC_IsNewCardPresent();
     virtual bool PICC_ReadCardSerial();
-    virtual int PICC_getUID(int i);
+    virtual uint8_t PICC_getUID(int i);
 
 protected:
     // Pins
