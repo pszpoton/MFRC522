@@ -3,7 +3,7 @@ let MFRC522 = {
     _init: ffi('void mgos_mfrc522_init(void *)'),
     _dump2serial: ffi('void mgos_mfrc522_dump2serial(void *)'),
     _isnewcardpresent: ffi('bool mgos_mfrc522_isnewcardpresent(void *)'),
-    _readuic: ffi('uint8_t mgos_mfrc522_readuic(void *,int)'),
+    _readuic: ffi('int mgos_mfrc522_readuic(void *,int)'),
 
     create: function(pin1,pin2) {
         let obj = Object.create(MFRC522._proto);
