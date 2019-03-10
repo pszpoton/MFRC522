@@ -1778,7 +1778,29 @@ bool MFRC522::PICC_ReadCardSerial()
     return (result == MFRC522_STATUS_OK);
 } // End
 
-int MFRC522::PICC_getUID(int i)
+int MFRC522::PICC_getUID(int aa)
 {
-    return uid.uidByte[i];
+    MFRC522::StatusCode status;
+    uint8_t buffer[18];
+    uint8_t size = sizeof (buffer);
+    uint8_t trailerBlock   = 7;
+    uint8_t sector   = 4;
+    MFRC522::MIFARE_Key key;
+
+    for (uint8_t i = 0; i < 6; i++) {
+        key.keyByte[i] = 0xFF;
+    }
+    printf("Authentication\n");
+    status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &uid);
+    // printf(status);
+    // Read the block
+    printf("Read\n");
+    // status = MIFARE_Read(sector, buffer, &size);
+    if (status == MFRC522_STATUS_OK) {
+         }
+    // printf(status);
+    PICC_HaltA(); // Halt the PICC before stopping the encrypted session.
+    PCD_StopCrypto1();
+
+    return 7;
 }
