@@ -357,8 +357,7 @@ public:
 			: _chipSelectPin(chipSelectPin), _resetPowerDownPin(resetPowerDownPin),
 			  _spiClass(spiClass), _spiSettings(spiSettings) {};
     
-    MFRC522() : MFRC522(UNUSED_PIN, UNUSED_PIN) {};
-
+    
     /////////////////////////////////////////////////////////////////////////////////////
     // Basic interface functions for communicating with the MFRC522
     /////////////////////////////////////////////////////////////////////////////////////
@@ -422,7 +421,7 @@ public:
     static PICC_Type PICC_GetType(uint8_t sak);
 
     // Support functions for debuging - proxy for MFRC522Debug to keep backwarts compatibility
-    static const __FlashStringHelper *GetStatusCodeName(StatusCode code);
+    static const char *GetStatusCodeName(StatusCode code);
     static const __FlashStringHelper *PICC_GetTypeName(PICC_Type type);
 
     // Support functions for debuging
@@ -441,7 +440,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////
     virtual bool PICC_IsNewCardPresent();
     virtual bool PICC_ReadCardSerial();
-    virtual int PICC_getUID(int i);
+    virtual bool PICC_getBlock(int blockAddr,uint8_t buffer[]);
 
 protected:
     // Pins

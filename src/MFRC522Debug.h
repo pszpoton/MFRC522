@@ -9,6 +9,6 @@ private:
 public:
 	// Get human readable code and type
 	static const __FlashStringHelper *PICC_GetTypeName(MFRC522::PICC_Type type);
-	static const __FlashStringHelper *GetStatusCodeName(MFRC522::StatusCode code);
+	static const char *GetStatusCodeName(MFRC522::StatusCode code);
 };
 #endif // MFRC522Debug_h

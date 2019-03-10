@@ -37,10 +37,33 @@ bool mgos_mfrc522_readcardserial(MFRC522 *rfid)
   return rfid->PICC_ReadCardSerial();
 }
 
-int mgos_mfrc522_readuic(MFRC522 *rfid, int i)
+char* mgos_mfrc522_getblock(MFRC522 *rfid, int blockAddr)
  {
-  if (rfid == nullptr) return 0;
-  return rfid->PICC_getUID(i);
+  if (rfid == nullptr){
+    char a[1];
+    return a;
+  }
+  if ( ! rfid->PICC_IsNewCardPresent()) 
+  { char a[1];
+    return a;
+  }
+  // Select one of the cards
+  if ( ! rfid->PICC_ReadCardSerial()) 
+  {
+    char a[1];
+    return a;
+  }
+
+  uint8_t buffer[18];
+  rfid->PICC_getBlock(blockAddr,buffer);
+  char card[128];
+  uint8_t index = 0;
+
+  for (uint8_t i = 0; i < 18; i++) {
+      index += snprintf(&card[index], 128-index, "%d,", buffer[i]);
+  }
+  printf(card);
+  return card;
 }
 
 

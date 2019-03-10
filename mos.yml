@@ -1,21 +1,35 @@
 author: mongoose-os
-description: Implements PN532
-type: lib
+description: A Mongoose OS app skeleton
 version: 1.0
 
+libs_version: ${mos.version}
+modules_version: ${mos.version}
+mongoose_os_version: ${mos.version}
+
+
+# List of files / directories with C sources. No slashes at the end of dir names.
 sources:
   - src
+
 includes:
   - include
+
+# List of dirs. Files from these dirs will be copied to the device filesystem
+filesystem:
+  - fs
+
+# Custom configuration entries, settable via "device configuration"
+# Below is a custom firmware configuration example.
+# Uncomment and modify according to your needs:
 
 config_schema:
   - ["spi.enable", true]
 
 libs:
   - origin: https://github.com/mongoose-os-libs/arduino-compat
-  - origin: https://github.com/mongoose-os-libs/arduino-wire
   - origin: https://github.com/mongoose-os-libs/arduino-spi
-  
+  # - origin: https://github.com/mongoose-os-libs/mjs
+
 tags:
   - c
   - c++

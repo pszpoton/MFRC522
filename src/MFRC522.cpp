@@ -4,10 +4,9 @@
  * Released into the public domain.
  */
 
-#include <Arduino.h>
+
 #include "MFRC522.h"
 #include "MFRC522Debug.h"
-#include <mgos.h>
 
 
 
@@ -810,7 +809,6 @@ MFRC522::StatusCode MFRC522::PICC_Select(Uid *uid, ///< Pointer to Uid struct. N
 
     // Set correct uid->size
     uid->size = 3 * cascadeLevel + 1;
-
     return MFRC522_STATUS_OK;
 } // End PICC_Select()
 
@@ -1276,7 +1274,7 @@ MFRC522::StatusCode MFRC522::PCD_MIFARE_Transceive(uint8_t *sendData, ///< Point
  *
  * @return const __FlashStringHelper *
  */
-const __FlashStringHelper *MFRC522::GetStatusCodeName(MFRC522::StatusCode code ///< One of the StatusCode enums.
+const char *MFRC522::GetStatusCodeName(MFRC522::StatusCode code ///< One of the StatusCode enums.
     )
 {
     return MFRC522Debug::GetStatusCodeName(code);
@@ -1327,12 +1325,12 @@ const __FlashStringHelper *MFRC522::PICC_GetTypeName(PICC_Type piccType ///< One
  */
 void MFRC522::PCD_DumpVersionToSerial()
 {
-    LOG(LL_INFO, ("Dump version"));
+    printf("Dump version");
     // Get the MFRC522 firmware version
     uint8_t v = PCD_ReadRegister(VersionReg);
     // When 0x00 or 0xFF is returned, communication probably failed
     if ((v == 0x00) || (v == 0xFF)) {
-        LOG(LL_INFO, ("WARNING: Communication failure, is the MFRC522 properly connected?"));
+        printf("WARNING: Communication failure, is the MFRC522 properly connected?");
         //Serial.println(F("WARNING: Communication failure, is the MFRC522 properly connected?"));
         return;
     }
@@ -1340,7 +1338,7 @@ void MFRC522::PCD_DumpVersionToSerial()
     //Serial.print(F("Firmware Version: 0x"));
     //Serial.print(v, HEX);
     int len = snprintf(buf, sizeof (buf), "Firmware Version: %02X", (0xFF & v));
-    LOG(LL_INFO, ("Firmware Version: 0x"));
+    printf("Firmware Version: 0x");
     printf("%d\n", v);
     // Lookup which version
     switch (v) {
@@ -1582,8 +1580,8 @@ void MFRC522::PICC_DumpMifareClassicSectorToSerial(Uid *uid, ///< Pointer to Uid
         if (isSectorTrailer) {
             status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, firstBlock, key, uid);
             if (status != MFRC522_STATUS_OK) {
-                //Serial.print(F("PCD_Authenticate() failed: "));
-                //Serial.println(GetStatusCodeName(status));
+                printf("PCD_Authenticate() failed: ");
+                printf(GetStatusCodeName(status));
                 len += snprintf(buf + len, sizeof (buf) - len, "PCD_Authenticate() failed: %s", (const char*) GetStatusCodeName(status));
                 return;
             }
@@ -1778,29 +1776,45 @@ bool MFRC522::PICC_ReadCardSerial()
     return (result == MFRC522_STATUS_OK);
 } // End
 
-int MFRC522::PICC_getUID(int aa)
+bool MFRC522::PICC_getBlock(int blockAddr,uint8_t buffer[18])
 {
     MFRC522::StatusCode status;
-    uint8_t buffer[18];
-    uint8_t size = sizeof (buffer);
-    uint8_t trailerBlock   = 7;
-    uint8_t sector   = 4;
-    MFRC522::MIFARE_Key key;
+ 
+    uint8_t size = 18;
+    uint8_t trailerBlock   = blockAddr+3;
+    MIFARE_Key* key = new MIFARE_Key();
 
-    for (uint8_t i = 0; i < 6; i++) {
-        key.keyByte[i] = 0xFF;
+
+     for (uint8_t i = 0; i < 6; i++) {
+                key->keyByte[i] = 0xFF;
     }
-    printf("Authentication\n");
-    status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, trailerBlock, &key, &uid);
-    // printf(status);
+    //  for (uint8_t i = 0; i < 3; i++) {
+    //      printf("%d ", (&uid)->uidByte[i] & 0xFF);
+         
+    // }
+    // printf("key\n");
+    // for (uint8_t i = 0; i < 6; i++) {
+    //      printf("%d ", key->keyByte[i] );
+         
+    // }
+    // printf("Authentication\n");
+    status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, trailerBlock, key, &uid);
+    // printf(GetStatusCodeName(status));
+    printf("\n");
     // Read the block
-    printf("Read\n");
-    // status = MIFARE_Read(sector, buffer, &size);
-    if (status == MFRC522_STATUS_OK) {
-         }
-    // printf(status);
+    printf("Read card value\n");
+    status = MIFARE_Read(blockAddr, buffer, &size);
+    // printf(GetStatusCodeName(status));
+    // printf("\n");
+    // printf("card number: ");
+    // if (status == MFRC522_STATUS_OK) {
+    //     for (uint8_t i = 0; i < 18; i++) {
+    //         printf("%d ", buffer[i] );
+    //     }
+    // }
+    // printf("\n");
     PICC_HaltA(); // Halt the PICC before stopping the encrypted session.
     PCD_StopCrypto1();
 
-    return 7;
+    return buffer;
 }
