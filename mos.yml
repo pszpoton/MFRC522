@@ -1,29 +1,12 @@
 author: mongoose-os
-description: A Mongoose OS app skeleton
+description: Implements PN532
+type: lib
 version: 1.0
 
-libs_version: ${mos.version}
-modules_version: ${mos.version}
-mongoose_os_version: ${mos.version}
-
-# Optional. List of tags for online search.
-tags:
-  - c++
-
-# List of files / directories with C sources. No slashes at the end of dir names.
 sources:
   - src
-
 includes:
   - include
-
-# List of dirs. Files from these dirs will be copied to the device filesystem
-filesystem:
-  - fs
-
-# Custom configuration entries, settable via "device configuration"
-# Below is a custom firmware configuration example.
-# Uncomment and modify according to your needs:
 
 config_schema:
   - ["spi.enable", true]
