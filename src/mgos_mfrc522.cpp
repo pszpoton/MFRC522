@@ -37,7 +37,7 @@ bool mgos_mfrc522_readcardserial(MFRC522 *rfid)
   return rfid->PICC_ReadCardSerial();
 }
 
-char* mgos_mfrc522_getblock(MFRC522 *rfid, int blockAddr)
+const char *mgos_mfrc522_getblock(MFRC522 *rfid, int blockAddr)
  {
   if (rfid == nullptr){
     char a[1];
