@@ -1800,9 +1800,6 @@ bool MFRC522::PICC_getBlock(int blockAddr,uint8_t buffer[18])
     // printf("Authentication\n");
     status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, trailerBlock, key, &uid);
     // printf(GetStatusCodeName(status));
-    printf("\n");
-    // Read the block
-    printf("Read card value\n");
     status = MIFARE_Read(blockAddr, buffer, &size);
     // printf(GetStatusCodeName(status));
     // printf("\n");
