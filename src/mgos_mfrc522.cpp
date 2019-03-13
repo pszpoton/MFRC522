@@ -63,8 +63,8 @@ const char *mgos_mfrc522_getblock(MFRC522 *rfid, int blockAddr)
       index += snprintf(&card[index], 128-index, "%d,", buffer[i]);
   }
   const char* cc=card;
-  printf("returning card value %s \n",cc);
-  return "hello";
+  // printf("returning card value %s \n",cc);
+  return cc;
 }
 
 
