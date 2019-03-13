@@ -66,6 +66,7 @@ const char *mgos_mfrc522_getblock(MFRC522 *rfid, int blockAddr)
   memset(&string[0], '\0', sizeof(card)+1);
   memcpy(&string[0], &card[0], sizeof(card));
   printf("returning card value %s  with length %d\n",string,strlen(string));
+  printf("comparing strings %d",strcmp("1,2,3,4,5,6,7,8,9,10,255,11,12,13,14,15,172,249,",string));
   return string;
 }
 
