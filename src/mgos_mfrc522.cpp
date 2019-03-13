@@ -40,17 +40,17 @@ bool mgos_mfrc522_readcardserial(MFRC522 *rfid)
 const char *mgos_mfrc522_getblock(MFRC522 *rfid, int blockAddr)
  {
   if (rfid == nullptr){
-    const char a[1];
+    const char* a="\0";
     return a;
   }
   if ( ! rfid->PICC_IsNewCardPresent()) 
-  { const char a[1];
+  { const char* a="\0";
     return a;
   }
   // Select one of the cards
   if ( ! rfid->PICC_ReadCardSerial()) 
   {
-    sonst char a[1];
+    const char* a="\0";
     return a;
   }
 
