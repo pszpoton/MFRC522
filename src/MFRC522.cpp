@@ -1776,7 +1776,7 @@ bool MFRC522::PICC_ReadCardSerial()
     return (result == MFRC522_STATUS_OK);
 } // End
 
-bool MFRC522::PICC_getBlock(int blockAddr,uint8_t buffer[18])
+bool MFRC522::PICC_getBlock(int blockAddr)
 {
     MFRC522::StatusCode status;
  
@@ -1788,30 +1788,11 @@ bool MFRC522::PICC_getBlock(int blockAddr,uint8_t buffer[18])
      for (uint8_t i = 0; i < 6; i++) {
                 key->keyByte[i] = 0xFF;
     }
-    //  for (uint8_t i = 0; i < 3; i++) {
-    //      printf("%d ", (&uid)->uidByte[i] & 0xFF);
-         
-    // }
-    // printf("key\n");
-    // for (uint8_t i = 0; i < 6; i++) {
-    //      printf("%d ", key->keyByte[i] );
-         
-    // }
-    // printf("Authentication\n");
     status = PCD_Authenticate(PICC_CMD_MF_AUTH_KEY_A, trailerBlock, key, &uid);
-    // printf(GetStatusCodeName(status));
-    status = MIFARE_Read(blockAddr, buffer, &size);
-    // printf(GetStatusCodeName(status));
-    // printf("\n");
-    // printf("card number: ");
-    // if (status == MFRC522_STATUS_OK) {
-    //     for (uint8_t i = 0; i < 18; i++) {
-    //         printf("%d ", buffer[i] );
-    //     }
-    // }
-    // printf("\n");
-    PICC_HaltA(); // Halt the PICC before stopping the encrypted session.
+    status = MIFARE_Read(blockAddr, card.value, &size);
+
+    PICC_HaltA(); 
     PCD_StopCrypto1();
 
-    return buffer;
+    return true;
 }

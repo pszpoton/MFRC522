@@ -338,6 +338,13 @@ public:
         uint8_t sak; // The SAK (Select acknowledge) uint8_t returned from the PICC after successful selection.
     } Uid;
 
+    typedef struct
+    {
+        uint8_t value[18];
+    } CardValue;
+
+    CardValue card;
+
     // A struct used for passing a MIFARE Crypto1 key
 
     typedef struct
@@ -440,7 +447,7 @@ public:
     /////////////////////////////////////////////////////////////////////////////////////
     virtual bool PICC_IsNewCardPresent();
     virtual bool PICC_ReadCardSerial();
-    virtual bool PICC_getBlock(int blockAddr,uint8_t buffer[]);
+    virtual bool PICC_getBlock(int blockAddr);
 
 protected:
     // Pins
